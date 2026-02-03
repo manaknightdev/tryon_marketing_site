@@ -8,7 +8,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Tryon Studio | Virtual Try-On, Recolor & Background Swap API",
+  title: "Traion Studio | Virtual Try-On, Recolor & Background Swap API",
   description: "The complete AI studio for e-commerce and automotive retail. Virtual try-on, instant product coloring, and professional background generation.",
 };
 

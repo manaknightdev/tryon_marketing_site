@@ -2,7 +2,7 @@ import styles from '../app/page.module.css';
 
 export const FaqSection = () => {
     return (
-        <section className={styles.faqSection}>
+        <section id="faq" className={styles.faqSection}>
             <div className={styles.sectionHeader}>
                 <h2 className={styles.sectionTitle}>Frequently Asked Questions</h2>
                 <p className={styles.sectionSubtitle}>

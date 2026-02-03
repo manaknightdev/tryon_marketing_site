@@ -3,7 +3,7 @@ import styles from '../app/page.module.css';
 
 export const CtaSection = () => {
     return (
-        <section className={styles.ctaSection}>
+        <section id="contact" className={styles.ctaSection}>
             <div className={styles.ctaContent}>
                 <h2>Ready to upgrade your visuals?</h2>
                 <p>Join leading dealerships and retailers transforming their catalogs with AI.</p>

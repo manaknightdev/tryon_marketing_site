@@ -5,9 +5,12 @@ import {
   TrustedBy,
   Showcase,
   Features,
+  AvatarModels,
+  Advantages,
   HowItWorks,
   ApiSection,
   FaqSection,
+  Testimonials,
   CtaSection,
   Footer
 } from '@/components';
@@ -27,8 +30,11 @@ export default function Home() {
       <Hero />
       <TrustedBy />
       <Features />
+      <AvatarModels />
+      <Advantages />
       <HowItWorks />
-      {/* <ApiSection /> */}
+      <ApiSection />
+      <Testimonials />
       <FaqSection />
       <CtaSection />
       <Footer />

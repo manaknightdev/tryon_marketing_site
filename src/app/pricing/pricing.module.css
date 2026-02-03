@@ -1,0 +1,207 @@
+/* Pricing section – card grid */
+.pricingSection {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 0 64px;
+}
+
+.pricingGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  align-items: stretch;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 32px 28px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(18, 18, 24, 0.85);
+  backdrop-filter: blur(12px);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.card:hover {
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.35);
+}
+
+.cardPopular {
+  padding-top: 44px;
+  border-color: rgba(139, 92, 246, 0.4);
+  background: rgba(24, 20, 40, 0.9);
+  box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.15), 0 24px 48px rgba(0, 0, 0, 0.4);
+}
+
+.cardPopular:hover {
+  border-color: rgba(139, 92, 246, 0.6);
+  box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.2), 0 28px 56px rgba(0, 0, 0, 0.45);
+}
+
+.popularBadge {
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--accent-purple), #7c3aed);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+}
+
+.cardTitle {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+
+.cardDescription {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.priceWrap {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin-bottom: 28px;
+}
+
+.priceAmount {
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.pricePeriod {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.featureList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 28px;
+  flex-grow: 1;
+}
+
+.featureList li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+.featureList li::before {
+  content: '';
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  border-radius: 50%;
+  background: rgba(16, 185, 129, 0.25);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2310b981' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E");
+  background-size: 14px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.cardCta {
+  display: block;
+  width: 100%;
+  padding: 14px 24px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cardCtaPrimary {
+  background: linear-gradient(135deg, var(--accent-purple), #7c3aed);
+  color: #fff;
+  border: none;
+}
+
+.cardCtaPrimary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(139, 92, 246, 0.4);
+}
+
+.cardCtaSecondary {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.cardCtaSecondary:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .pricingGrid {
+    grid-template-columns: 1fr;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+  .cardPopular {
+    order: -1;
+  }
+}
+
+@media (max-width: 600px) {
+  .pricingSection {
+    padding: 0 0 48px;
+  }
+
+  .card {
+    padding: 24px 20px;
+  }
+
+  .cardPopular {
+    padding-top: 40px;
+  }
+
+  .cardTitle {
+    font-size: 20px;
+  }
+
+  .priceAmount {
+    font-size: 34px;
+  }
+
+  .pricePeriod {
+    font-size: 14px;
+  }
+
+  .featureList li {
+    font-size: 13px;
+  }
+
+  .cardCta {
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+}

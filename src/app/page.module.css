@@ -89,13 +89,17 @@
   right: 0;
   z-index: 100;
   padding: 16px 40px;
-  background: rgba(0, 0, 0, 0.7);
+  background: linear-gradient(
+    180deg,
+    rgba(3, 7, 18, 0.95) 0%,
+    rgba(3, 7, 18, 0.85) 100%
+  );
   backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08); /* slight adjustment to border for contrast */
 }
 
 .navContent {
-  max-width: 1400px;
+  max-width: 100%;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -565,6 +569,22 @@
   margin: 0 auto 64px;
 }
 
+.sectionEyebrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin: 0 auto 16px;
+}
+
 .sectionTitle {
   font-size: 48px;
   font-weight: 600;
@@ -623,6 +643,253 @@
 .featureCard p {
   font-size: 15px;
   line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+/* Avatar Models */
+.avatarSection {
+  padding: 120px 40px 80px;
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(180deg, #000, #0c0815);
+  color: #fff;
+}
+
+.avatarCarouselWrap {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.avatarCarousel {
+  overflow: hidden;
+  /* scroll-behavior is handled in JS for instant jumps, but smooth for animation */
+  /* Remove native smooth scroll here to avoid conflict or keep it if JS sets behave: smooth explicitly */
+  padding: 20px 0 30px;
+  position: relative;
+  /* Fade mask */
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 15%,
+    #000 85%,
+    transparent 100%
+  );
+}
+
+.avatarTrack {
+  display: flex;
+  gap: 40px; /* Wider gap as per design */
+  padding: 0 50vw; /* Center padding strategy */
+  width: max-content; /* Ensure track wraps contents */
+}
+
+.avatarCard {
+  /* Clean card style */
+  background: transparent;
+  border: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  transition:
+    transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    opacity 0.6s ease;
+  cursor: pointer;
+}
+
+.avatarCardCarousel {
+  flex: 0 0 400px; /* Fixed width for consistency */
+  opacity: 0.4;
+  transform: scale(0.85);
+}
+
+.avatarCardActive {
+  transform: scale(1.1); /* Make center one significantly larger */
+  opacity: 1;
+  z-index: 10;
+}
+
+.avatarImageFrame {
+  position: relative;
+  width: 100%;
+  border-radius: 4px; /* Slightly squarer or as design */
+  overflow: hidden;
+  /* Light gray background for image rect */
+  background: #e5e5e5;
+  aspect-ratio: 3/4; /* Vertical portrait */
+}
+
+.avatarImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* If images are transparent PNGs (avatars), we might need object-contain or fit depending on asset */
+  /* Assuming standard photos based on 'TryonResult' naming */
+}
+
+/* Controls */
+.avatarControls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 32px;
+}
+
+.avatarArrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.avatarArrow:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: #000;
+  transform: scale(1.1);
+}
+
+.avatarDots {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.avatarDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ccc;
+  border: none;
+  transition: all 0.3s ease;
+  padding: 0;
+  cursor: pointer;
+}
+
+.avatarDotActive {
+  background: #8b5cf6; /* Purple active dot */
+  transform: scale(1.2);
+}
+
+/* Advantages */
+/* Advantages */
+.advantagesSection {
+  padding: 100px 40px;
+  position: relative;
+  z-index: 1;
+  background-color: #000;
+}
+
+.advantagesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.advantageCard {
+  padding: 40px 32px;
+  border-radius: 4px; /* Squarer cards */
+  background: rgba(255, 255, 255, 0.05); /* Very subtle light fill on dark */
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease;
+}
+
+.advantageCard:hover {
+  transform: translateY(-6px);
+  background: rgba(255, 255, 255, 0.08); /* Slightly lighter on hover */
+}
+
+.advantageIcon {
+  margin-bottom: 24px;
+  color: #fff; /* White icon */
+  /* Remove boxy background */
+  background: transparent;
+  width: auto;
+  height: auto;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Make icon SVG larger */
+.advantageIcon svg {
+  width: 48px;
+  height: 48px;
+  stroke-width: 1.5; /* Client might want thinner or thicker lines, 1.5 is standard sleek */
+}
+
+.advantageCard h3 {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 12px;
+  color: #fff;
+}
+
+.advantageCard p {
+  font-size: 15px;
+  color: #a1a1aa; /* Zinc-400 equivalent */
+  line-height: 1.6;
+  max-width: 280px; /* Constrain width for readability like design */
+  margin: 0 auto;
+}
+
+/* Testimonials */
+.testimonialsSection {
+  padding: 120px 40px;
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(59, 130, 246, 0.06),
+    transparent
+  );
+}
+
+.testimonialsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.testimonialCard {
+  padding: 32px;
+  border-radius: 24px;
+  background: rgba(10, 10, 10, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.testimonialQuote {
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.testimonialMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
   color: var(--text-secondary);
 }
 
@@ -958,17 +1225,54 @@
 }
 
 .footerBottom {
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding-top: 32px;
   border-top: 1px solid var(--border);
   font-size: 13px;
   color: var(--text-secondary);
 }
 
+.footerSocials {
+  display: flex;
+  gap: 12px;
+}
+
+.footerSocials a {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+}
+
+.footerSocials a:hover {
+  color: var(--primary);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
 /* Responsive */
 @media (max-width: 1100px) {
   .featureGrid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .avatarTrack {
+    padding: 0 6vw;
+  }
+
+  .advantagesGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .testimonialsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .apiContent {
@@ -1026,6 +1330,11 @@
     gap: 40px;
     flex-wrap: wrap;
   }
+
+  .footerBottom {
+    flex-direction: column;
+    gap: 16px;
+  }
 }
 
 @media (max-width: 600px) {
@@ -1038,6 +1347,7 @@
     letter-spacing: -1.5px;
   }
 
+  /* Restore subtitle here if it was needed, or omit if intentional */
   .subtitle {
     font-size: 16px;
   }
@@ -1045,6 +1355,92 @@
   .heroActions {
     flex-direction: column;
     width: 100%;
+  }
+}
+
+/* Mobile Menu Elements (Top Level) */
+.mobileMenuToggle {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.mobileMenuOverlay {
+  position: fixed;
+  top: 70px; /* Below nav */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(3, 7, 18, 0.98) 0%,
+    rgba(3, 7, 18, 0.95) 100%
+  );
+  z-index: 200; /* Ensure it's on top of everything */
+  padding: 40px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(24px);
+  animation: fadeIn 0.3s ease;
+  height: fit-content;
+}
+
+.mobileMenuLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.mobileMenuLinks a {
+  color: var(--text-secondary);
+  transition: color 0.2s;
+}
+
+.mobileMenuLinks a:hover {
+  color: white;
+}
+
+.mobileDivider {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 10px 0;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 900px) {
+  .nav {
+    padding: 16px 20px;
+  }
+
+  .navLinks {
+    display: none;
+  }
+
+  .navActions .signIn {
+    display: none; /* Hide desktop buttons on mobile */
+  }
+
+  .mobileMenuToggle {
+    display: block;
+  }
+
+  .logoText {
+    white-space: nowrap;
+    font-size: 18px;
   }
 
   /* Fix for How It Works on Mobile */
@@ -1066,6 +1462,18 @@
   }
 
   .featureGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .avatarCardCarousel {
+    flex-basis: min(360px, 80vw);
+  }
+
+  .advantagesGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .testimonialsGrid {
     grid-template-columns: 1fr;
   }
 
@@ -1111,6 +1519,7 @@
   z-index: 20;
   display: flex;
   gap: 12px;
+  align-items: center;
 }
 
 .stepIndicators {
@@ -1160,6 +1569,40 @@
   box-shadow: 0 4px 12px rgba(59, 130, 246, 0.5);
 }
 
+.carouselActions {
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+}
+
+.carouselButton {
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+  background: transparent;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.carouselButton:hover {
+  color: white;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.carouselButtonActive {
+  color: white;
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.08);
+}
+
 .tooltip {
   pointer-events: none;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
@@ -1202,8 +1645,8 @@
 }
 
 .featureCard {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 20px;
   padding: 16px;
   flex: 1;
@@ -1235,7 +1678,7 @@
   flex: 1.5;
   height: 100%;
   border-color: var(--active-color);
-  box-shadow: 0 0 30px rgba(0,0,0,0.2);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
 }
 
 .arrowDivider {
@@ -1243,7 +1686,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: rgba(255,255,255,0.2);
+  color: rgba(255, 255, 255, 0.2);
 }
 
 @media (max-width: 768px) {
@@ -1257,7 +1700,7 @@
 .immersiveContainer {
   position: relative;
   width: 100%;
-  min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1271,9 +1714,14 @@
   grid-template-columns: 280px 1fr 400px; /* Left Inputs, Center Text, Right Result */
   gap: 40px;
   width: 100%;
-  max-width: 1400px;
+  max-width: 80%;
   z-index: 10;
   align-items: center;
+  transition: grid-template-columns 0.5s ease;
+}
+
+.immersiveGridLarge {
+  grid-template-columns: 280px 1fr 1fr;
 }
 
 /* Left Column - Inputs */
@@ -1320,6 +1768,20 @@
   background: #1f2937;
 }
 
+.cardImageBackdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(1.1);
+}
+
+.cardImageForeground {
+  position: relative;
+  z-index: 1;
+}
+
 .cardImage {
   width: 100%;
   height: 100%;
@@ -1337,6 +1799,9 @@
   align-items: center;
   text-align: center;
   gap: 32px;
+
+  min-height: fit-content;
+  height: fit-content;
 }
 
 .heroTitleBig {
@@ -1401,7 +1866,7 @@
   font-size: 12px;
   line-height: 1.6;
   color: #6b7280;
-  font-family: 'SF Mono', monospace;
+  font-family: "SF Mono", monospace;
 }
 
 /* Right Column - Result */
@@ -1458,6 +1923,47 @@
   padding: 0;
 }
 
+.resultImageStack {
+  position: relative;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #0b0d12;
+}
+
+.resultImageBefore {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+.resultReveal {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.resultImageAfter {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+.revealLine {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 3;
+}
+
+.resultImageLarge {
+  transform: scale(1.08);
+  transform-origin: center;
+}
+
 /* Cursors and Decor */
 .floatingCursor {
   position: absolute;
@@ -1487,7 +1993,7 @@
   align-items: center;
   justify-content: center;
   color: #9ca3af;
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Responsive */
@@ -1503,25 +2009,108 @@
 
 @media (max-width: 900px) {
   .immersiveGrid {
+    gap: 40px;
+    max-width: 100%;
+    height: fit-content;
+    /* Reset grid styles if any linger */
     grid-template-columns: 1fr;
-    max-width: 500px;
+    grid-template-rows: auto auto;
+  }
+  .immersiveGridLarge {
+    gap: 40px;
+    max-width: 100%;
+    /* Reset grid styles if any linger */
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
   }
 
+  /* Hide input/left column on mobile */
   .immersiveLeftCol {
-    flex-direction: row;
+    display: none;
+  }
+
+  /* Move result/right column to the top */
+  .immersiveRightCol {
+    order: -1;
+    width: 100%;
+    height: auto;
+  }
+
+  /* Result Card - Allow full expansion */
+  .resultCard {
+    height: auto;
+    min-height: auto;
+    max-height: none; /* remove constraint */
+    overflow: visible; /* allow content to dictate bounds */
+    display: flex;
+    flex-direction: column;
+  }
+
+  .resultImageContainer {
+    height: auto;
+    overflow: visible;
+  }
+
+  .resultImageContainerDynamic {
+    height: auto !important;
+    max-height: none !important;
+  }
+
+  .resultImageStack {
+    height: auto;
+    overflow: hidden; /* Keep stack clipped if needed inside */
+  }
+
+  /* Ensure image fits inside the card nicely but dictates height */
+  .resultImage,
+  .resultImageAfter,
+  .resultImageBefore {
+    object-fit: contain;
+    width: 100%;
+    height: auto; /* Let aspect ratio drive height */
+    max-height: 70vh; /* Cap it at viewport percentage to avoid excessively tall images */
+  }
+
+  /* Fix footer overlap by ensuring center col clears the top */
+  .immersiveCenterCol {
+    width: 100%;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding-top: 24px;
+  }
+
+  .processBox {
+    margin: 0 auto;
   }
 
   .immersiveContainer {
-    padding: 100px 20px;
+    padding: 150px 20px;
     height: auto;
     min-height: auto;
+  }
+
+  .heroTitleBig {
+    font-size: 48px !important; /* Force smaller size */
   }
 
   .resultCard {
     min-height: auto;
   }
-  
+
   .resultImageContainerDynamic {
     min-height: 0 !important;
+  }
+
+  /* Fix controls responsive positioning */
+  .showcaseControls {
+    display: relative;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    gap: 16px;
+    padding-bottom: 0px;
+    margin-bottom: -30px;
   }
 }

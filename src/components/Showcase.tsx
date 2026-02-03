@@ -5,18 +5,15 @@ import {
     CarFront,
     MousePointer2,
     Image as ImageIcon,
-    Wand2,
     PaintBucket,
     User,
     Shirt,
-    Sparkles,
     Layers,
     ArrowRight,
     CheckCircle2,
     Download,
     Plus,
-    Terminal,
-    ScanFace
+    Terminal
 } from 'lucide-react';
 import { BackgroundChangeResult, BackgroundImage, CarImage, TryonAvatar, TryonGarment, TryonResult, ColorChangeResult, ColorChangeImage, ColorImage } from '@/assets/images';
 import styles from '../app/page.module.css';
@@ -30,14 +27,21 @@ interface ImmersiveLayoutProps {
     subtitle: string;
     processText: string;
     accentColor: string;
-    input1: { label: string; icon: any; image: any; cursor?: { label: string; color: string; x: number; y: number } };
+    input1: { label: string; icon: any; image: any; backgroundImage?: any; cursor?: { label: string; color: string; x: number; y: number } };
     input2: { label: string; icon: any; image: any; cursor?: { label: string; color: string; x: number; y: number } };
-    result: { label: string; image: any };
+    result: { label: string; image: any; beforeImage?: any; emphasis?: 'large' | 'default' };
 }
 
 const ImmersiveLayout = ({ title, subtitle, processText, accentColor, input1, input2, result }: ImmersiveLayoutProps) => {
+    const revealTransition = {
+        duration: 6,
+        ease: "linear",
+        repeat: Infinity,
+        repeatDelay: 2
+    } as const;
+
     return (
-        <div className={styles.immersiveGrid}>
+        <div className={`${styles.immersiveGrid} ${result.emphasis === 'large' ? styles.immersiveGridLarge : ''}`}>
 
             {/* LEFT COLUMN - INPUTS */}
             <div className={styles.immersiveLeftCol}>
@@ -53,7 +57,18 @@ const ImmersiveLayout = ({ title, subtitle, processText, accentColor, input1, in
                         <span>{input1.label}</span>
                     </div>
                     <div className={`${styles.cardImageContainer} ${styles.cardImageContainerContain}`} style={{ aspectRatio: '3/4' }}>
-                        <img src={typeof input1.image === 'string' ? input1.image : input1.image.src} alt={input1.label} className={styles.cardImage} />
+                        {input1.backgroundImage && (
+                            <img
+                                src={typeof input1.backgroundImage === 'string' ? input1.backgroundImage : input1.backgroundImage.src}
+                                alt={`${input1.label} environment`}
+                                className={styles.cardImageBackdrop}
+                            />
+                        )}
+                        <img
+                            src={typeof input1.image === 'string' ? input1.image : input1.image.src}
+                            alt={input1.label}
+                            className={`${styles.cardImage} ${styles.cardImageForeground}`}
+                        />
                         {/* Interactive Plus Button */}
                         <div className={styles.plusButton} style={{ top: -10, right: -10 }}>
                             <Plus size={14} />
@@ -158,29 +173,43 @@ const ImmersiveLayout = ({ title, subtitle, processText, accentColor, input1, in
                     </div>
 
                     <div className={`${styles.resultImageContainer} ${styles.resultImageContainerDynamic}`}>
-                        <motion.img
-                            src={typeof result.image === 'string' ? result.image : result.image.src}
-                            alt="Result"
-                            className={styles.resultImage}
-                            initial={{ scale: 1.1, filter: 'blur(10px)' }}
-                            animate={{ scale: 1, filter: 'blur(0px)' }}
-                            transition={{ delay: 0.5, duration: 0.8 }}
-                        />
-                        {/* Scanning Line Effect */}
-                        <motion.div
-                            style={{
-                                position: 'absolute',
-                                left: 0,
-                                right: 0,
-                                height: 2,
-                                background: accentColor,
-                                boxShadow: `0 0 20px ${accentColor}`,
-                                zIndex: 10
-                            }}
-                            initial={{ top: '0%' }}
-                            animate={{ top: '100%' }}
-                            transition={{ duration: 1.5, ease: "linear", repeat: Infinity, repeatDelay: 3 }}
-                        />
+                        {result.beforeImage ? (
+                            <div className={styles.resultImageStack}>
+                                <img
+                                    src={typeof result.beforeImage === 'string' ? result.beforeImage : result.beforeImage.src}
+                                    alt="Before"
+                                    className={`${styles.resultImageBefore} ${result.emphasis === 'large' ? styles.resultImageLarge : ''}`}
+                                />
+                                <motion.div
+                                    className={styles.resultReveal}
+                                    initial={{ height: '0%' }}
+                                    animate={{ height: '100%' }}
+                                    transition={revealTransition}
+                                >
+                                    <img
+                                        src={typeof result.image === 'string' ? result.image : result.image.src}
+                                        alt="After"
+                                        className={`${styles.resultImageAfter} ${result.emphasis === 'large' ? styles.resultImageLarge : ''}`}
+                                    />
+                                </motion.div>
+                                <motion.div
+                                    className={styles.revealLine}
+                                    style={{ background: accentColor, boxShadow: `0 0 18px ${accentColor}` }}
+                                    initial={{ top: '0%' }}
+                                    animate={{ top: '100%' }}
+                                    transition={revealTransition}
+                                />
+                            </div>
+                        ) : (
+                            <motion.img
+                                src={typeof result.image === 'string' ? result.image : result.image.src}
+                                alt="Result"
+                                className={`${styles.resultImage} ${result.emphasis === 'large' ? styles.resultImageLarge : ''}`}
+                                initial={{ scale: 1.1, filter: 'blur(10px)' }}
+                                animate={{ scale: 1, filter: 'blur(0px)' }}
+                                transition={{ delay: 0.5, duration: 0.8 }}
+                            />
+                        )}
                     </div>
                 </motion.div>
             </div>
@@ -197,19 +226,23 @@ const ImmersiveLayout = ({ title, subtitle, processText, accentColor, input1, in
 export const Showcase = () => {
     // 0: Fashion, 1: Auto, 2: Recolor
     const [viewState, setViewState] = useState(0);
+    const [isPlaying, setIsPlaying] = useState(true);
 
     // Auto-cycle through views
     useEffect(() => {
+        if (!isPlaying) {
+            return;
+        }
         const timer = setInterval(() => {
             setViewState((prev) => (prev + 1) % 3);
-        }, 8000);
+        }, 12000);
         return () => clearInterval(timer);
-    }, []);
+    }, [isPlaying]);
 
-    const views = [
+    const views: ImmersiveLayoutProps[] = [
         // VIEW 0: FASHION
         {
-            title: "trAiOn",
+            title: "Traion",
             subtitle: "The ultimate virtual try-on engine. Visualize garments on any model instantly with photorealistic AI precision.",
             processText: "Analyzing target body pose and lighting conditions. Warping input garment texture [Beige Ribbed Sweater] to fit target mesh. Adjusting fabric drape, shadows, and occlusion. Rendering final photorealistic composite...",
             accentColor: "#8b5cf6", // Purple
@@ -226,19 +259,21 @@ export const Showcase = () => {
             },
             result: {
                 label: "Virtual Try-On Result",
-                image: TryonResult // Model Wearing Shirt (Different Image)
+                image: TryonResult, // Model Wearing Shirt (Different Image)
+                beforeImage: TryonAvatar
             }
         },
         // VIEW 1: AUTOMOTIVE
         {
-            title: "AutoBg",
+            title: "AutoBG",
             subtitle: "Contextual background replacement for automotive retail. Place vehicles in any environment instantly.",
             processText: "Segmenting vehicle foreground from source. Estimating lighting direction and reflections. Generating shadow maps for 'Showroom' environment. Blending glossy surfaces with new HDR map...",
             accentColor: "#3b82f6", // Blue
             input1: {
                 label: "Original Vehicle",
                 icon: CarFront,
-                image: CarImage
+                image: CarImage,
+                backgroundImage: BackgroundImage
             },
             input2: {
                 label: "Target Environment",
@@ -248,7 +283,9 @@ export const Showcase = () => {
             },
             result: {
                 label: "Composite Shot",
-                image: BackgroundChangeResult // Same car (simulated result)
+                image: BackgroundChangeResult, // Same car (simulated result)
+                beforeImage: CarImage,
+                emphasis: 'large'
             }
         },
         // VIEW 2: RECOLOR
@@ -260,17 +297,18 @@ export const Showcase = () => {
             input1: {
                 label: "Target Object",
                 icon: Layers,
-                image: ColorChangeImage 
+                image: ColorChangeImage
             },
             input2: {
                 label: "Color Selection",
                 icon: PaintBucket,
-                image: ColorImage, 
+                image: ColorImage,
                 cursor: { label: "Alex (Creative)", color: "#fF0000", x: 100, y: 30 }
             },
             result: {
                 label: "Recolored Variant",
-                image: ColorChangeResult // Green Nike Shoe (Variant)
+                image: ColorChangeResult, // Green Nike Shoe (Variant)
+                beforeImage: ColorChangeImage
             }
         }
     ];
@@ -322,6 +360,22 @@ export const Showcase = () => {
                             )}
                         </button>
                     ))}
+                </div>
+                <div className={styles.carouselActions}>
+                    <button
+                        className={`${styles.carouselButton} ${isPlaying ? styles.carouselButtonActive : ''}`}
+                        onClick={() => setIsPlaying(true)}
+                        type="button"
+                    >
+                        Play
+                    </button>
+                    <button
+                        className={`${styles.carouselButton} ${!isPlaying ? styles.carouselButtonActive : ''}`}
+                        onClick={() => setIsPlaying(false)}
+                        type="button"
+                    >
+                        Stop
+                    </button>
                 </div>
             </div>
         </section>

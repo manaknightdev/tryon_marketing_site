@@ -17,18 +17,18 @@ export const ApiSection = () => {
                     <ul className={styles.apiFeatures}>
                         <li>
                             <CheckCircle2 size={18} />
-                            <span>/background-change: Context aware scene generation</span>
+                            <span>POST /api/v1/traion/background-change</span>
                         </li>
                         <li>
                             <CheckCircle2 size={18} />
-                            <span>/color-change: Preserves texture and lighting</span>
+                            <span>POST /api/v1/traion/color-change</span>
                         </li>
                         <li>
                             <CheckCircle2 size={18} />
-                            <span>/try-on: Specialized fashion engine</span>
+                            <span>POST /api/v1/traion/try-on</span>
                         </li>
                     </ul>
-                    <button className="btn btn-primary">
+                    <button className="btn btn-primary" style={{ display: 'none' }}>
                         Read Documentation
                         <ArrowRight size={18} style={{ marginLeft: 8 }} />
                     </button>
@@ -40,20 +40,19 @@ export const ApiSection = () => {
                             <span />
                             <span />
                         </div>
-                        <span>automotive-example.js</span>
+                        <span>api-example.js</span>
                     </div>
                     <pre className={styles.codeBlock}>
                         {`// 1. Dealer Showroom Generation
-const result = await api.post('/background-change', {
-  image: 'https://dealer.com/inventory/bmw-x5.jpg',
-  background: 'luxury-showroom-interior.jpg',
-  occupation: 85 // Feature car prominently
+const result = await api.post('/api/v1/traion/background-change', {
+  product_image_url: 'https://dealer.com/inventory/bmw-x5.jpg',
+  background_image_url: 'luxury-showroom-interior.jpg', // Environment
 });
 
 // 2. Generate Color Options
-const variants = await api.post('/color-change', {
-  image: result.url,
-  color_code: '#1F2937' // Midnight Black
+const variants = await api.post('/api/v1/traion/color-change', {
+  product_image_url: result.url,
+  color_code: '#1F2937' // Target Color / Texture
 });`}
                     </pre>
                 </div>
